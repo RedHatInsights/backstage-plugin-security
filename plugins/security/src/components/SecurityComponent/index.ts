@@ -1,0 +1,1 @@
+export { SecurityComponent  } from './SecurityComponent';
