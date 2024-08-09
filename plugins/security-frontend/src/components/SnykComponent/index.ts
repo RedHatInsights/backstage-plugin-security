@@ -1,0 +1,1 @@
+export { SnykComponent  } from './SnykComponent';

@@ -53,7 +53,7 @@ import {
 
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
-import { EntitySecurityContent } from '@internal/backstage-plugin-security';
+import { EntitySecurityFrontendContent } from '@RedHatInsights/backstage-plugin-security-frontend';
 
 
 const techdocsContent = (
@@ -149,9 +149,8 @@ const serviceEntityPage = (
     </EntityLayout.Route>
 
     <EntityLayout.Route path="/security" title="Security">
-      <EntitySecurityContent />
+      <EntitySecurityFrontendContent />
     </EntityLayout.Route>
-
 
     <EntityLayout.Route path="/ci-cd" title="CI/CD">
       {cicdContent}

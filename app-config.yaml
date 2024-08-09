@@ -31,23 +31,40 @@ backend:
     client: better-sqlite3
     connection: ':memory:'
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
+  reading:
+    allow:
+      - host: 'api.github.com'
 
 integrations:
   github:
-    - host: github.com
+    - host: api.github.com
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
       # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
-      token: ${GITHUB_TOKEN}
+      token: ${GITHUB_ACTIONS_PAT}
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
-    #   apiBaseUrl: https://ghe.example.net/api/v3
-    #   token: ${GHE_TOKEN}
+      apiBaseUrl: https://api.github.com
+    #   token: ${GITHUB_ACTIONS_PAT}
 
 proxy:
-  # endpoints:
-  #   '/security':
-  #     credentials: dangerously-allow-unauthenticated
-      # target: ""
+  endpoints:
+    '/actions':
+      target: "https://api.github.com"
+      headers:
+        Authorization: "Bearer ${GITHUB_ACTIONS_PAT}"
+      credentials: dangerously-allow-unauthenticated
+      allowedHeaders:
+        - Location
+        - Authorization
+        - X-GitHub-Api-Version
+        - Accept
+    '/snyk':
+      target: "https://api.snyk.io"
+      headers:
+        Authorization: "${SNYK_SA_TOKEN}"
+        accept: "application/vnd.api+json"
+      credentials: dangerously-allow-unauthenticated
+
 
   ### Example for how to add a proxy endpoint for the frontend.
   ### A typical reason to do this is to handle HTTPS and CORS for internal services.
