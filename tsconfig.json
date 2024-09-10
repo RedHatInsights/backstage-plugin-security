@@ -9,6 +9,11 @@
   "exclude": ["node_modules"],
   "compilerOptions": {
     "outDir": "dist-types",
-    "rootDir": "."
+    "rootDir": ".",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+  },
+  "ts-node": {
+    "esm": true
   }
 }

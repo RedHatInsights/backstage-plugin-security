@@ -1,5 +1,5 @@
 {
-  "name": "@internal/backstage-plugin-security",
+  "name": "@RedHatInsights/backstage-plugin-security-frontend",
   "version": "0.1.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -30,6 +30,8 @@
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "4.0.0-alpha.61",
+    "@mui/icons-material": "^6.0.1",
+    "@mui/material": "^6.0.1",
     "react-use": "^17.2.4"
   },
   "peerDependencies": {
