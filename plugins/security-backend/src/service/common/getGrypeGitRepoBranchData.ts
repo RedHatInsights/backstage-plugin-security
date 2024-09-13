@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import react, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import yauzl from 'yauzl';
@@ -16,7 +16,7 @@ export const QueryGithubActionsRunsData = async (backendUrl: string) => {
       "X-GitHub-Api-Version": "2022-11-28"
     }
 
-    const resp = await fetch(url, { method: "get", redirect: "manual",  headers: headers})
+    await fetch(url, { method: "get", redirect: "manual",  headers: headers})
       .then(response => {
         location = JSON.stringify(response.headers.get("location"));
       })
@@ -34,31 +34,38 @@ export const QueryGithubActionsRunsData = async (backendUrl: string) => {
     });
 
     const buffer = Buffer.from(response.data);
+    
+    return new Promise<string>((resolve, reject) => {
+      // Open the ZIP file from memory
+      yauzl.fromBuffer(buffer, { lazyEntries: true }, (err: any, zipFile: any) => {
+        if (err) reject(err);
 
-    // Open the ZIP file from memory
-    yauzl.fromBuffer(buffer, { lazyEntries: true }, (err: any, zipFile: any) => {
-      if (err) throw err;
+        zipFile.readEntry();
 
-      zipFile.readEntry();
+        zipFile.on('entry', (entry: any) => {
+            // Found the file we want to extract
+            zipFile.openReadStream(entry, (error: any, readStream: any) => {
+              if (error) throw err;
 
-      zipFile.on('entry', (entry: any) => {
-        // if (entry.fileName === "grype-vuln-artifacts-Dockerfile.zip") {
-          // Found the file we want to extract
-          zipFile.openReadStream(entry, (error: any, readStream: any) => {
-            if (error) throw err;
+              // Process the extracted file here
+              readStream.on('data', (chunk: any) => {
+                fileData += chunk;
+              });
 
-            // Process the extracted file here
-            readStream.on('data', (chunk: any) => {
-              fileData += chunk;
+              readStream.on('end', () => {
+                resolve(fileData)
+              //   // console.log(`Extracted file content: ${fileData}`);
+              //   // zipFile.close();
+              });
             });
-
-            readStream.on('end', () => {
-              console.log(`Extracted file content: ${fileData}`);
-              zipFile.close();
-            });
-          });
-      });
+        });
+      })
     })
 
-    return fileData
+    // myPromise.then((res) => {
+    //   console.log(res)
+    //   fileData = res
+    // })
+
+    // return fileData
 }

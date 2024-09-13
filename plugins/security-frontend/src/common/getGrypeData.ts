@@ -12,27 +12,25 @@ export const GetGrypeData = () => {
     const backendUrl = config.getString('backend.baseUrl');
 
     const getGrypeRepoData = async () => {
-        const requestOptions = {
-            version: "2024-08-25",
-            limit: 100,
-        };
-
-        // Find project ID
+        // get grype data from the security plugin's backend
         await fetch(`${backendUrl}/api/security/grype`)
+            .then(response => response.json())
             .then(response => {
                 console.log(response)
+            //     setResult(response)
             })
             .catch((_error) => {
                 setError(true)
                 console.error(`Error fetching Snyk project target data: ${_error}`);
             })
-    }
+        }
+
 
     useEffect(() => {
         getGrypeRepoData()
     }, []);
 
-    console.log(result)
+    // console.log(result)
 
     return { result, loaded, error }
 }

@@ -6,8 +6,8 @@ import Router from 'express-promise-router';
 
 import { QueryGithubActionsRunsData } from './common/getGrypeGitRepoBranchData'
 
-import health from './routes/health.router';
-import grype from './routes/grype.router';
+// import health from './routes/health.router';
+// import grype from './routes/grype.router';
 
 export interface RouterOptions {
   logger: LoggerService;
@@ -26,19 +26,25 @@ export async function createRouter(
   const router = Router();
 
   router.use(express.json());
-  
+
+  const middleware = MiddlewareFactory.create({ logger, config });
+
+  router.use(middleware.error());
   // router.use("/health", health)
   router.get('/health', (_, response) => {
     response.json({ status: 'ok' });
   });
 
   // router.use("/grype", grype)
-  router.get('/grype', (req, response) => {
-    response.json({ response: QueryGithubActionsRunsData(backendUrl) })
+  router.get('/grype', (req, res) => {
+    // console.log(QueryGithubActionsRunsData(backendUrl))
+    // res.status(200).send({data: QueryGithubActionsRunsData(backendUrl)})
+    return QueryGithubActionsRunsData(backendUrl)
+      .then((data) => {
+        console.log(data)
+        res.status(200).send(JSON.stringify(data))
+      })
   });
 
-  const middleware = MiddlewareFactory.create({ logger, config });
-
-  router.use(middleware.error());
   return router;
 }
