@@ -53,19 +53,10 @@ export const QueryGithubActionsRunsData = async (backendUrl: string) => {
               });
 
               readStream.on('end', () => {
-                resolve(fileData)
-              //   // console.log(`Extracted file content: ${fileData}`);
-              //   // zipFile.close();
+                resolve(JSON.parse(fileData))
               });
             });
         });
       })
     })
-
-    // myPromise.then((res) => {
-    //   console.log(res)
-    //   fileData = res
-    // })
-
-    // return fileData
 }
