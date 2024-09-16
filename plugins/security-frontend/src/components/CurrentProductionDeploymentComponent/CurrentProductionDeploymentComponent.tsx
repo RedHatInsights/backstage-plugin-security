@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Grid, Box } from '@material-ui/core';
-// import { QueryGithubActionsRunsData } from '../../common/getGrypeGitRepoBranchData'
 import {
     InfoCard,
     Header,
@@ -8,15 +7,17 @@ import {
     Content,
     ContentHeader,
 } from '@backstage/core-components';
+import { GetGrypeData } from '../../common/getGrypeData';
+import { PaginatedTable } from '../PaginatedTable';
 
 export function CurrentProductionDeploymentComponent() {
-    // const { result, loaded, error } = QueryGithubActionsRunsData()
+    const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeData()
     
-    // console.log(result)
-
+    console.log(grypeResult)
+    
     return (
-        <InfoCard>
-            test
-        </InfoCard>
+        <div>
+            <PaginatedTable grypeData={grypeResult} />
+        </div>
     )
 }

@@ -17,7 +17,7 @@ export const GetGrypeData = () => {
             .then(response => response.json())
             .then(response => {
                 console.log(response)
-            //     setResult(response)
+                setResult(response)
             })
             .catch((_error) => {
                 setError(true)
@@ -25,12 +25,9 @@ export const GetGrypeData = () => {
             })
         }
 
-
     useEffect(() => {
         getGrypeRepoData()
     }, []);
-
-    // console.log(result)
 
     return { result, loaded, error }
 }

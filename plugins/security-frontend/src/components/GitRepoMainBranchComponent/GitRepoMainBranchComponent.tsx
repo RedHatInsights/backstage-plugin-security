@@ -11,13 +11,13 @@ import { PaginatedTable } from '../PaginatedTable';
 import { GetGrypeData } from '../../common/getGrypeData';
 
 export function GitRepoMainBranchComponent() {
-    const { result: GrypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeData()
+    const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeData()
 
-    console.log(GrypeResult)
+    console.log(grypeResult)
 
     return (
         <div>
-            <PaginatedTable />
+            <PaginatedTable grypeData={grypeResult} />
         </div>
     )
 }

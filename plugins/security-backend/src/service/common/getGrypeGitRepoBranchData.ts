@@ -7,7 +7,7 @@ export const QueryGithubActionsRunsData = async (backendUrl: string) => {
 
     // Backstage's proxy does not support redirect urls, therefore we are 
     // manually implementing the redirect
-    const url = `${backendUrl}/api/proxy/actions/repos/RedHatInsights/clowder/actions/artifacts/1887237108/zip`;
+    const url = `${backendUrl}/api/proxy/actions/repos/RedHatInsights/ephemeral-namespace-operator/actions/artifacts/1918827369/zip`;
     let location: string = "";
     let fileData = '';
 
