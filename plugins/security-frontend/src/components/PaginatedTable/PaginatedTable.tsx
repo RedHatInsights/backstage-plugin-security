@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
 import {
   Grid,
   Link,
@@ -12,7 +11,6 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 interface Column {
   id: 'vulnerability' | 'severity' | 'package' | 'fixed version';
@@ -21,15 +19,6 @@ interface Column {
   align?: 'right';
   format?: (value: number) => string;
 }
-
-const theme = createTheme({
-  typography: {
-    subtitle1: {
-      fontSize: 12,
-    },
-  },
-});
-
 
 export const PaginatedTable = (grypeData: any) => {
   const [page, setPage] = React.useState(0);
@@ -44,16 +33,12 @@ export const PaginatedTable = (grypeData: any) => {
     setPage(0);
   };
 
-  const collectVulnerabilityData = () => {
-    
-  }
-
   const RowHead = () => {
     return (
       <TableHead>
         <TableRow>
           <TableCell align="center">
-            <Typography>Vulnerability</Typography>
+            <Typography >Vulnerability</Typography>
           </TableCell>
           <TableCell align="center">
             <Typography>Severity</Typography>
@@ -115,7 +100,6 @@ export const PaginatedTable = (grypeData: any) => {
       <Table aria-label="simple table">
         <RowHead />
         <TableBody>
-          {/* {grypeData[1]?.ignoredMatches?.map((vulnerability) => ( */}
           {grypeData?.grypeData?.matches?.map((vulnerability) => (
             <RowBody result={vulnerability} />
           ))}
@@ -125,7 +109,6 @@ export const PaginatedTable = (grypeData: any) => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
     <Grid container spacing={3} direction="column">
       <TableContainer>
         <ShowTable />
@@ -140,6 +123,5 @@ export const PaginatedTable = (grypeData: any) => {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Grid>
-    </ThemeProvider>
   );
 }

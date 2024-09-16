@@ -18,6 +18,7 @@ export const GetGrypeData = () => {
             .then(response => {
                 console.log(response)
                 setResult(response)
+                setLoaded(true)
             })
             .catch((_error) => {
                 setError(true)
