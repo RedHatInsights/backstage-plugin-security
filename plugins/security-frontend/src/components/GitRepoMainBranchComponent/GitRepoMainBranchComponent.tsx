@@ -15,8 +15,6 @@ import { GetGrypeData } from '../../common/getGrypeData';
 export function GitRepoMainBranchComponent() {
     const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeData()
 
-    console.log(grypeResult)
-
     const useStyles = makeStyles(theme => ({
         root: {
           width: '100%',

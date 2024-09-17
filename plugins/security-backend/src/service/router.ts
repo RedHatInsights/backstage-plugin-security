@@ -30,18 +30,15 @@ export async function createRouter(
   const middleware = MiddlewareFactory.create({ logger, config });
 
   router.use(middleware.error());
-  // router.use("/health", health)
+
+  // TODO: move these to separate router files
   router.get('/health', (_, response) => {
     response.json({ status: 'ok' });
   });
 
-  // router.use("/grype", grype)
   router.get('/grype', (req, res) => {
-    // console.log(QueryGithubActionsRunsData(backendUrl))
-    // res.status(200).send({data: QueryGithubActionsRunsData(backendUrl)})
     return QueryGithubActionsRunsData(backendUrl)
       .then((data) => {
-        console.log(data)
         res.status(200).send(JSON.stringify(data))
       })
   });

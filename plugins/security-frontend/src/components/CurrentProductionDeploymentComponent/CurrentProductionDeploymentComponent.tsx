@@ -15,8 +15,6 @@ import { PaginatedTable } from '../PaginatedTable';
 export function CurrentProductionDeploymentComponent() {
     const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeData()
     
-    console.log(grypeResult)
-    
     const useStyles = makeStyles(theme => ({
         root: {
           width: '100%',

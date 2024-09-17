@@ -5,10 +5,11 @@ import yauzl from 'yauzl';
 
 export const QueryGithubActionsRunsData = async (backendUrl: string) => {
 
-    // Backstage's proxy does not support redirect urls, therefore we are 
-    // manually implementing the redirect
-    const url = `${backendUrl}/api/proxy/actions/repos/RedHatInsights/ephemeral-namespace-operator/actions/artifacts/1918827369/zip`;
+
+    const artifactUrl = `${backendUrl}/api/proxy/actions/repos/RedHatInsights/ephemeral-namespace-operator/actions/artifacts`;
     let location: string = "";
+    let mainBranchJobId: number = 0;
+    let productionDeployedJobId: number = 0;
     let fileData = '';
 
     const headers = {
@@ -16,12 +17,43 @@ export const QueryGithubActionsRunsData = async (backendUrl: string) => {
       "X-GitHub-Api-Version": "2022-11-28"
     }
 
-    await fetch(url, { method: "get", redirect: "manual",  headers: headers})
+    const getProductionDeployedJob = (artifacts: any) => {
+      console.log("TODO: logic for production deployed job here")
+    }
+
+    const getMainBranchJob = (artifacts: any) => {
+      for (let i = 0; i < artifacts.length; i++) {
+        const headBranch = artifacts[i].workflow_run.head_branch;
+        
+        if (headBranch === "main" || headBranch === "master") {
+          return artifacts[i].id;
+        }
+      };
+
+      return {}
+    }
+
+    await fetch(artifactUrl, { method: "get", redirect: "manual",  headers: headers})
+      .then(response => response.json())
+      .then(response => {
+        console.log(response.artifacts[0].workflow_run.head_sha);
+        console.log(response.artifacts[0].workflow_run.head_branch);
+
+        mainBranchJobId = getMainBranchJob(response.artifacts);
+        console.log("LINE 36: ", mainBranchJobId);
+      })
+      .catch((_error) => {
+          console.error(`Error fetching list of artifacts: `, _error);
+      })
+
+    // Backstage's proxy does not support redirect urls, therefore we are 
+    // manually implementing the redirect
+    await fetch(`${artifactUrl}/${mainBranchJobId}/zip`, { method: "get", redirect: "manual",  headers: headers})
       .then(response => {
         location = JSON.stringify(response.headers.get("location"));
       })
       .catch((_error) => {
-          console.error(`Error fetching location header information`);
+          console.error(`Error fetching location header information: `, _error);
       })
 
     console.log(location)
@@ -34,7 +66,7 @@ export const QueryGithubActionsRunsData = async (backendUrl: string) => {
     });
 
     const buffer = Buffer.from(response.data);
-    
+
     return new Promise<string>((resolve, reject) => {
       // Open the ZIP file from memory
       yauzl.fromBuffer(buffer, { lazyEntries: true }, (err: any, zipFile: any) => {
