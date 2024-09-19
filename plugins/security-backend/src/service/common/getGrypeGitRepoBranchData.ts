@@ -4,8 +4,6 @@ import axios from 'axios';
 import yauzl from 'yauzl';
 
 export const QueryGithubActionsRunsData = async (backendUrl: string) => {
-
-
     const artifactUrl = `${backendUrl}/api/proxy/actions/repos/RedHatInsights/ephemeral-namespace-operator/actions/artifacts`;
     let location: string = "";
     let mainBranchJobId: number = 0;
