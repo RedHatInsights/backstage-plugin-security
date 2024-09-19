@@ -28,7 +28,6 @@ const QueryQontract = (query: string, path?: string) => {
         await request(proxyUrl, query, variables)
             .then((data: any) => {
                 setLoaded(true)
-                console.log("data.apps_v1", data.apps_v1[0])
                 setResult(data.apps_v1[0])
             })
             .catch((_error) => {

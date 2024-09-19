@@ -6,9 +6,6 @@ import Router from 'express-promise-router';
 
 import { QueryGithubActionsRunsData } from './common/getGrypeGitRepoBranchData'
 
-// import health from './routes/health.router';
-// import grype from './routes/grype.router';
-
 export interface RouterOptions {
   logger: LoggerService;
   config: Config;

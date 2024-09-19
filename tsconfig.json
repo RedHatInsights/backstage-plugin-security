@@ -10,10 +10,7 @@
   "compilerOptions": {
     "outDir": "dist-types",
     "rootDir": ".",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "baseUrl": ".",
+    "moduleResolution": "Bundler"
   },
-  "ts-node": {
-    "esm": true
-  }
 }
