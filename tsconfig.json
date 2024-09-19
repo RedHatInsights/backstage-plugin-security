@@ -11,5 +11,6 @@
     "outDir": "dist-types",
     "rootDir": ".",
     "baseUrl": ".",
+    "moduleResolution": "Bundler"
   },
 }
