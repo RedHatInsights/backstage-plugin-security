@@ -11,6 +11,7 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
+import { InfoCard } from '@backstage/core-components';
 
 interface Column {
   id: 'vulnerability' | 'severity' | 'package' | 'fixed version';
@@ -107,6 +108,16 @@ export const PaginatedTable = (grypeData: any) => {
       </Table>
     );
   };
+
+  if (!grypeData?.grypeData?.matches?.length) {
+    return (
+      <InfoCard>
+        <Typography align="center" variant="button">
+          This service does not have grype data to display
+        </Typography>
+      </InfoCard>
+    );
+  }
 
   return (
     <Grid container spacing={3} direction="column">
