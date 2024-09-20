@@ -32,6 +32,8 @@
     "@material-ui/lab": "4.0.0-alpha.61",
     "@mui/icons-material": "^6.0.1",
     "@mui/material": "^6.0.1",
+    "graphql": "^16.9.0",
+    "graphql-request": "^7.1.0",
     "react-use": "^17.2.4"
   },
   "peerDependencies": {

@@ -11,8 +11,6 @@ export const getSnykData = () => {
     const config = useApi(configApiRef);
     const backendUrl = config.getString('backend.baseUrl');
 
-    // const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = QueryGithubActionsRunsData();
-
     const getProjectId = (data: Array<String>) => {
         data.map((projTarget) => {
             if (projTarget?.attributes?.display_name === "insights-platform/malware-detection-backend") {
@@ -31,7 +29,7 @@ export const getSnykData = () => {
         };
 
         // Find project ID
-        await fetch(`${backendUrl}/api/proxy/snyk/rest/orgs/${ORG_ID}/targets?version=2024-08-25&limit=100`, requestOptions)
+        await fetch(`${backendUrl}/api/proxy/snyk/rest/orgs/ORG_ID/targets?version=2024-08-25&limit=100`, requestOptions)
             .then(response => response.json())
             .then(response => {
                 const projId = setProjectId(getProjectId(response.data))
