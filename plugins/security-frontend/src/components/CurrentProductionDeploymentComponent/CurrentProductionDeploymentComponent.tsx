@@ -12,9 +12,10 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { GetGrypeData } from '../../common/getGrypeData';
 import { PaginatedTable } from '../PaginatedTable';
 
-export function CurrentProductionDeploymentComponent() {
-    const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeData()
+export const CurrentProductionDeploymentComponent = (service: string) => {
+    const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeData(service)
     
+    console.log(service)
     const useStyles = makeStyles(theme => ({
         root: {
           width: '100%',

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useApi, configApiRef } from '@backstage/core-plugin-api';
 
-export const GetGrypeData = () => {
+export const GetGrypeData = (service: string) => {
     const [result, setResult] = useState<any>({});
     const [loaded, setLoaded] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
@@ -13,7 +13,7 @@ export const GetGrypeData = () => {
 
     const getGrypeRepoData = async () => {
         // get grype data from the security plugin's backend
-        await fetch(`${backendUrl}/api/security/grype`)
+        await fetch(`${backendUrl}/api/security/grype?service=${service.service}`)
             .then(response => response.json())
             .then(response => {
                 console.log(response)

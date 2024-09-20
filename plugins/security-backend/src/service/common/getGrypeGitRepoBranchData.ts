@@ -5,8 +5,8 @@ import yauzl from 'yauzl';
 import QueryQontract from './queryQontract';
 import { NSQuery } from './query';
 
-export const QueryGithubActionsRunsData = async (backendUrl: string) => {
-    const artifactUrl = `${backendUrl}/api/proxy/actions/repos/RedHatInsights/ephemeral-namespace-operator/actions/artifacts`;
+export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName: string) => {
+    const artifactUrl = `${backendUrl}/api/proxy/actions/repos/RedHatInsights/${serviceName}/actions/artifacts`;
     let location: string = "";
     let mainBranchJobId: number = 0;
     let productionDeployedJobId: number = 0;
@@ -20,13 +20,13 @@ export const QueryGithubActionsRunsData = async (backendUrl: string) => {
     const getProductionDeployedJob = (artifacts: any) => {
       console.log("TODO: logic for production deployed job here")
 
-      const {
-        result: qontractResult,
-        loaded: qontractLoaded,
-        error: qontractError,
-      } = QueryQontract(NSQuery);
+      // const {
+      //   result: qontractResult,
+      //   loaded: qontractLoaded,
+      //   error: qontractError,
+      // } = QueryQontract(NSQuery);
 
-      console.log(qontractResult)
+      // console.log(qontractResult)
     }
 
     const getMainBranchJob = (artifacts: any) => {

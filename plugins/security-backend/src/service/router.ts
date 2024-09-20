@@ -34,7 +34,10 @@ export async function createRouter(
   });
 
   router.get('/grype', (req, res) => {
-    return QueryGithubActionsRunsData(backendUrl)
+    const serviceName = req.query.service;
+    console.log("REQUEST: ", serviceName)
+    
+    return QueryGithubActionsRunsData(backendUrl, serviceName)
       .then((data) => {
         res.status(200).send(JSON.stringify(data))
       })
