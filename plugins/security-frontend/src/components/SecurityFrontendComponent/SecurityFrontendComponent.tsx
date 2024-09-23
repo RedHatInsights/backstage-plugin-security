@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Grid, Box } from '@material-ui/core';
 import {
     InfoCard,
@@ -17,31 +17,43 @@ import { NSQuery } from '../../common/query';
 export const SecurityFrontendComponent = () => {
     const title: string = "Security"
 
+    const [deployedHash, setDeployedHash] = useState<string>('');
+
     const { entity } = useEntity();
 
     const getEntityServiceName = () => {
-        // const platform = entity?.metadata?.labels?.platform
         if (entity?.metadata?.annotations?.["github.com/project-slug"]) {
             return entity?.metadata?.annotations?.["github.com/project-slug"].split('/')[1];
         }
 
         return "";
-        // return `/services/${platform}/${service}/app.yml`
     }
 
-    const getProductionDeployedJob = (artifacts: any) => {
-        console.log("TODO: logic for production deployed job here")
+    const getProdDeployedHash = (qontractResult) => {
+        const result = qontractResult.find((element) => element?.namespace?.path?.split('/')[5] === "prod.yml")
+        console.log("getProdDeployedHash: ", result?.ref)
 
+        return result?.ref
+    };
+
+    const getDeployedHash = (artifacts: any) => {
         const {
           result: qontractResult,
           loaded: qontractLoaded,
           error: qontractError,
         } = QueryQontract(NSQuery);
 
-        console.log(qontractResult)
+        const prodDeployedHash = getProdDeployedHash(qontractResult)
+
+        return prodDeployedHash
     }
 
-    getProductionDeployedJob()
+    const hash = getDeployedHash()
+
+    useEffect(() => {
+        setDeployedHash(hash)
+    }, [hash]);
+    
 
     const serviceName = getEntityServiceName()
     console.log("entity name", serviceName)
@@ -50,12 +62,12 @@ export const SecurityFrontendComponent = () => {
         <InfoCard title={title}>
             <Grid container rowSpacing={1} >
                 <Typography>Git Repo (Main/Master Branch)</Typography>
-                <Box gap={2} p={2} sx={{ width: '100%', height: '480px' }} overflow="auto">
+                <Box gap={2} p={2} sx={{ width: '100%' }} overflow="auto">
                     <GitRepoMainBranchComponent service={serviceName} />
                 </Box>
                 <Typography>Production Deployment (Current)</Typography>
-                <Box gap={4} p={2} sx={{ width: '100%', height: '480px' }} overflow="auto">
-                    <CurrentProductionDeploymentComponent service={serviceName} />
+                <Box gap={4} p={2} sx={{ width: '100%' }} overflow="auto">
+                    <CurrentProductionDeploymentComponent service={serviceName} deployedHash={deployedHash} />
                 </Box>
             </Grid>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

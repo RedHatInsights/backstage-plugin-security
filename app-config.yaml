@@ -50,6 +50,7 @@ proxy:
   endpoints:
     '/qontract': 
       target: 'https://app-interface.apps.rosa.appsrep09ue1.03r5.p3.openshiftapps.com/'
+      credentials: dangerously-allow-unauthenticated
     '/actions':
       target: "https://api.github.com"
       headers:

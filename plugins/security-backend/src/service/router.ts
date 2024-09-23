@@ -28,16 +28,30 @@ export async function createRouter(
 
   router.use(middleware.error());
 
-  // TODO: move these to separate router files
+  // TODO: move these routes to separate router files
   router.get('/health', (_, response) => {
     response.json({ status: 'ok' });
   });
 
-  router.get('/grype', (req, res) => {
+  router.get('/grype/main', (req, res) => {
     const serviceName = req.query.service;
-    console.log("REQUEST: ", serviceName)
+    const deployedHash = req.query.deployedHash;
     
-    return QueryGithubActionsRunsData(backendUrl, serviceName)
+    return QueryGithubActionsRunsData(backendUrl, serviceName, deployedHash)
+      .then((data) => {
+        res.status(200).send(JSON.stringify(data))
+      })
+  });
+
+  router.get('/grype/deployed', (req, res) => {
+    const serviceName = req.query.service;
+    const deployedHash = req.query.deployedHash;
+
+    console.log("QUERYDATA: ", req.query)
+    console.log("SERVICENAME: ", serviceName);
+    console.log("DEPLOYEDHASH: ", deployedHash);
+    
+    return QueryGithubActionsRunsData(backendUrl, serviceName, deployedHash)
       .then((data) => {
         res.status(200).send(JSON.stringify(data))
       })

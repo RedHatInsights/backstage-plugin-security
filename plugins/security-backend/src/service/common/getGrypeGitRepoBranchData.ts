@@ -3,17 +3,18 @@ import react, { useState, useEffect } from 'react';
 import axios from 'axios';
 import yauzl from 'yauzl';
 
-export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName: string) => {
+export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName: string, deployedHash: string) => {
     const artifactUrl = `${backendUrl}/api/proxy/actions/repos/RedHatInsights/${serviceName}/actions/artifacts`;
     let location: string = "";
-    let mainBranchJobId: number = 0;
-    let productionDeployedJobId: number = 0;
+    let artifactJobId: number = 0;
     let fileData = '';
 
     const headers = {
       Accept: "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28"
     }
+
+    console.log("DEPLOYEDHASH WORK PLEASE: ", deployedHash)
 
     const getMainBranchJob = (artifacts: any) => {
       for (let i = 0; i < artifacts.length; i++) {
@@ -27,14 +28,33 @@ export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName
       return {}
     }
 
-    await fetch(artifactUrl, { method: "get", redirect: "manual",  headers: headers})
+    const getDeployedJob = (artifacts: any) => {
+      for (let i = 0; i < artifacts.length; i++) {
+        const headSha = artifacts[i].workflow_run.head_sha;
+        
+        if (headSha === deployedHash) {
+          return artifacts[i].id;
+        }
+      };
+
+      return {}
+    }
+
+    await fetch(`${artifactUrl}?per_page=100`, { method: "get", redirect: "manual",  headers: headers})
       .then(response => response.json())
       .then(response => {
         console.log(response.artifacts[0].workflow_run.head_sha);
         console.log(response.artifacts[0].workflow_run.head_branch);
 
-        mainBranchJobId = getMainBranchJob(response.artifacts);
-        console.log("LINE 36: ", mainBranchJobId);
+        console.log("LINE 49: ", deployedHash)
+        if (deployedHash) {
+          artifactJobId = getDeployedJob(response.artifacts)
+        } else {
+          artifactJobId = getMainBranchJob(response.artifacts);
+        }
+        
+        console.log("RESPONSE: ", response.artifacts.length)
+        console.log("LINE 36: ", artifactJobId);
       })
       .catch((_error) => {
           console.error(`Error fetching list of artifacts: `, _error);
@@ -42,7 +62,7 @@ export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName
 
     // Backstage's proxy does not support redirect urls, therefore we are 
     // manually implementing the redirect
-    await fetch(`${artifactUrl}/${mainBranchJobId}/zip`, { method: "get", redirect: "manual",  headers: headers})
+    await fetch(`${artifactUrl}/${artifactJobId}/zip`, { method: "get", redirect: "manual",  headers: headers})
       .then(response => {
         location = JSON.stringify(response.headers.get("location"));
       })
