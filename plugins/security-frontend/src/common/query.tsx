@@ -3,17 +3,20 @@ import { gql } from 'graphql-request';
 
 export const NSQuery = gql`
 query App($path: String) {
-  apps_v1(path: $path) {
-    namespaces {
-      path
+  saas_files_v2(path: $path) {
+    path
+    name
+    app {
       name
-      description
-      cluster {
-        name
-        path
-        jumpHost {
-          hostname
+    }
+		resourceTemplates {
+      name
+      url
+      targets {
+        namespace {
+          path
         }
+				ref
       }
     }
   }

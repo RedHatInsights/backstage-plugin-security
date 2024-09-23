@@ -20,15 +20,17 @@ const QueryQontract = (query: string, path?: string) => {
     const getAppInterfaceNamespacePath = () => {
         const platform = entity?.metadata?.labels?.platform
         const service = entity?.metadata?.labels?.service
-        return `/services/${platform}/${service}/app.yml`
+        return `/services/${platform}/${service}/deploy.yml`
     }
 
     const queryQontract = async () => {
         const variables = { path: getAppInterfaceNamespacePath() };
+        console.log("variables: ", variables)
+
         await request(proxyUrl, query, variables)
             .then((data: any) => {
                 setLoaded(true)
-                setResult(data.apps_v1[0])
+                setResult(data.saas_files_v2[0].resourceTemplates[0].targets)
             })
             .catch((_error) => {
                 setError(true)
@@ -39,6 +41,8 @@ const QueryQontract = (query: string, path?: string) => {
     useEffect(() => {
         queryQontract()
     }, []);
+
+    // console.log("data: ", result)
 
     return { result, loaded, error }
 }

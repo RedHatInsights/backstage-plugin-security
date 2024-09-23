@@ -101,15 +101,16 @@ export const PaginatedTable = (grypeData: any) => {
       <Table aria-label="simple table">
         <RowHead />
         <TableBody>
-          {grypeData?.grypeData?.matches?.map((vulnerability) => (
-            <RowBody result={vulnerability} />
+
+          {grypeData?.grypeData?.matches?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+            <RowBody result={row} />
           ))}
         </TableBody>
       </Table>
     );
   };
 
-  if (!grypeData?.grypeData?.matches?.length) {
+  if (grypeData?.grypeData?.matches?.length == 0) {
     return (
       <InfoCard>
         <Typography align="center" variant="button">

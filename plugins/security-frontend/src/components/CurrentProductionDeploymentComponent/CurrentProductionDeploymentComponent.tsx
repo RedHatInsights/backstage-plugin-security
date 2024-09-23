@@ -9,13 +9,15 @@ import {
 } from '@backstage/core-components';
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { GetGrypeData } from '../../common/getGrypeData';
+import { GetGrypeDataDeployed } from '../../common/getGrypeDataDeployed';
 import { PaginatedTable } from '../PaginatedTable';
 
-export const CurrentProductionDeploymentComponent = (service: string) => {
-    const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeData(service)
+export const CurrentProductionDeploymentComponent = (data: Object) => {
+    const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeDataDeployed(data)
     
-    console.log(service)
+    console.log(data)
+    console.log(grypeResult)
+
     const useStyles = makeStyles(theme => ({
         root: {
           width: '100%',

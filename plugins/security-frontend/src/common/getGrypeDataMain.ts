@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useApi, configApiRef } from '@backstage/core-plugin-api';
 
-export const GetGrypeData = (service: string) => {
+export const GetGrypeDataMain = (data) => {
     const [result, setResult] = useState<any>({});
     const [loaded, setLoaded] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
@@ -13,7 +13,7 @@ export const GetGrypeData = (service: string) => {
 
     const getGrypeRepoData = async () => {
         // get grype data from the security plugin's backend
-        await fetch(`${backendUrl}/api/security/grype?service=${service.service}`)
+        await fetch(`${backendUrl}/api/security/grype/main?service=${data.service}`)
             .then(response => response.json())
             .then(response => {
                 console.log(response)
@@ -22,7 +22,7 @@ export const GetGrypeData = (service: string) => {
             })
             .catch((_error) => {
                 setError(true)
-                console.error(`Error fetching Snyk project target data: ${_error}`);
+                console.error(`Error fetching grype data for main branch of repository: ${_error}`);
             })
         }
 
