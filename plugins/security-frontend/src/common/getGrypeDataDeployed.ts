@@ -11,13 +11,7 @@ export const GetGrypeDataDeployed = (data) => {
     const config = useApi(configApiRef);
     const backendUrl = config.getString('backend.baseUrl');
 
-    console.log("LINE 14: ", data?.deployedHash);
-    console.log("LINE 15: ", data?.service);
-
     const getGrypeRepoData = async () => {
-
-        console.log("LINE 19: ", data?.deployedHash);
-        console.log("LINE 20: ", data?.service);
         // get grype data from the security plugin's backend
         await fetch(`${backendUrl}/api/security/grype/deployed?service=${data.service}&deployedHash=${data.deployedHash}`)
             .then(response => response.json())

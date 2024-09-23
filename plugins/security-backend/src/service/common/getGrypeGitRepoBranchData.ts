@@ -14,8 +14,6 @@ export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName
       "X-GitHub-Api-Version": "2022-11-28"
     }
 
-    console.log("DEPLOYEDHASH WORK PLEASE: ", deployedHash)
-
     const getMainBranchJob = (artifacts: any) => {
       for (let i = 0; i < artifacts.length; i++) {
         const headBranch = artifacts[i].workflow_run.head_branch;
@@ -46,15 +44,11 @@ export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName
         console.log(response.artifacts[0].workflow_run.head_sha);
         console.log(response.artifacts[0].workflow_run.head_branch);
 
-        console.log("LINE 49: ", deployedHash)
         if (deployedHash) {
           artifactJobId = getDeployedJob(response.artifacts)
         } else {
           artifactJobId = getMainBranchJob(response.artifacts);
         }
-        
-        console.log("RESPONSE: ", response.artifacts.length)
-        console.log("LINE 36: ", artifactJobId);
       })
       .catch((_error) => {
           console.error(`Error fetching list of artifacts: `, _error);

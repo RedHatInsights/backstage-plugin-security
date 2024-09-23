@@ -62,7 +62,7 @@ export const SecurityFrontendComponent = () => {
         <InfoCard title={title}>
             <Grid container rowSpacing={1} >
                 <Typography>Git Repo (Main/Master Branch)</Typography>
-                <Box gap={2} p={2} sx={{ width: '100%' }} overflow="auto">
+                <Box gap={3} p={2} sx={{ width: '100%' }} overflow="auto">
                     <GitRepoMainBranchComponent service={serviceName} />
                 </Box>
                 <Typography>Production Deployment (Current)</Typography>
