@@ -1,0 +1,9 @@
+#!/bin/bash
+
+yarn workspace @redhatinsights/backstage-plugin-security export-dynamic
+cd plugins/security-frontend/
+rm *.tgz
+npm pack ./dist-dynamic
+cd ../..
+mv plugins/security-frontend/*.tgz .
+sha256sum *.tgz | awk '{print $1}' | xxd -r -p | base64
