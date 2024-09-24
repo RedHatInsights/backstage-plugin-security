@@ -60,23 +60,25 @@ export const SecurityFrontendComponent = () => {
 
     return (
         <InfoCard title={title}>
-            <Grid container rowSpacing={1} >
-                <Typography>Git Repo (Main/Master Branch)</Typography>
-                <Box gap={3} p={2} sx={{ width: '100%' }} overflow="auto">
-                    <GitRepoMainBranchComponent service={serviceName} />
-                </Box>
-                <Typography>Production Deployment (Current)</Typography>
-                <Box gap={4} p={2} sx={{ width: '100%' }} overflow="auto">
-                    <CurrentProductionDeploymentComponent service={serviceName} deployedHash={deployedHash} />
-                </Box>
-            </Grid>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={6}>
-                    <Box gap={2} p={2} sx={{ width: '100%', height: '480px' }} overflow="auto">
-                        <Typography>Snyk</Typography>
-                        <SnykComponent />
+            <Grid container>
+                <Grid container>
+                    <Typography>Git Repo (Main/Master Branch)</Typography>
+                    <Box gap={4} p={3} sx={{ width: '100%' }} overflow="auto">
+                        <GitRepoMainBranchComponent service={serviceName} />
+                    </Box>
+                    <Typography>Production Deployment (Current)</Typography>
+                    <Box gap={4} p={3} sx={{ width: '100%' }} overflow="auto">
+                        <CurrentProductionDeploymentComponent service={serviceName} deployedHash={deployedHash} />
                     </Box>
                 </Grid>
+                {/* <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    <Grid item xs={6}>
+                        <Box gap={2} p={2} sx={{ width: '100%', height: '480px' }} overflow="auto">
+                            <Typography>Snyk</Typography>
+                            <SnykComponent />
+                        </Box>
+                    </Grid>
+                </Grid> */}
             </Grid>
         </InfoCard>
     )

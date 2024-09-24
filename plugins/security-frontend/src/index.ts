@@ -1,1 +1,5 @@
-export { SecurityFrontendPlugin, EntitySecurityFrontendContent } from './plugin';
+export {
+    SecurityFrontendPlugin,
+    EntitySecurityFrontendContent,
+    OverviewDisplayCardContent,
+} from './plugin';

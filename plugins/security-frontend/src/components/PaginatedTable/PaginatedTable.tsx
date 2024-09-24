@@ -98,7 +98,7 @@ export const PaginatedTable = (grypeData: any) => {
 
   const ShowTable = () => {
     return (
-      <Table aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <RowHead />
         <TableBody>
 
@@ -126,7 +126,7 @@ export const PaginatedTable = (grypeData: any) => {
         <ShowTable />
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[5]}
         component="div"
         count={grypeData?.grypeData?.matches?.length}
         rowsPerPage={rowsPerPage}
