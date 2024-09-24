@@ -1,6 +1,6 @@
 #!/bin/bash
 
-yarn workspace @redhatinsights/backstage-plugin-security export-dynamic
+yarn workspace @RedHatInsights/backstage-plugin-security-frontend export-dynamic
 cd plugins/security-frontend/
 rm *.tgz
 npm pack ./dist-dynamic
