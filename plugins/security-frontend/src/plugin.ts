@@ -15,3 +15,12 @@ export const EntitySecurityFrontendContent = SecurityFrontendPlugin.provide(
     },
   }),
 );
+
+export const OverviewDisplayCardContent = SecurityFrontendPlugin.provide(
+  createComponentExtension({
+    name: 'OverviewDisplayCardContent',
+    component: {
+      lazy: () => import('./components/OverviewDisplayCard').then(m => m.OverviewDisplayCard),
+    },
+  }),
+);
