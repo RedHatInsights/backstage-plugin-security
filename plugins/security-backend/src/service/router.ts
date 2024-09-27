@@ -1,4 +1,4 @@
-import { MiddlewareFactory } from '@backstage/backend-defaults/rootHttpRouter';
+// import { MiddlewareFactory } from '@backstage/backend-defaults/rootHttpRouter';
 import { LoggerService } from '@backstage/backend-plugin-api';
 import { Config } from '@backstage/config';
 import express from 'express';
@@ -24,9 +24,9 @@ export async function createRouter(
 
   router.use(express.json());
 
-  const middleware = MiddlewareFactory.create({ logger, config });
+  // const middleware = MiddlewareFactory.create({ logger, config });
 
-  router.use(middleware.error());
+  // router.use(middleware.error());
 
   // TODO: move these routes to separate router files
   router.get('/health', (_, response) => {
