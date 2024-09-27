@@ -64,7 +64,7 @@ proxy:
     '/snyk':
       target: "https://api.snyk.io"
       headers:
-        Authorization: "${SNYK_SA_TOKEN}"
+        Authorization: "${SNYK_AUTH_TOKEN}"
         accept: "application/vnd.api+json"
       credentials: dangerously-allow-unauthenticated
 

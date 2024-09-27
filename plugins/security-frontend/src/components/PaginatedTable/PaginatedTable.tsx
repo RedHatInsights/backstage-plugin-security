@@ -110,7 +110,7 @@ export const PaginatedTable = (grypeData: any) => {
     );
   };
 
-  if (grypeData?.grypeData?.matches?.length == 0) {
+  if (!grypeData?.grypeData?.matches) {
     return (
       <InfoCard>
         <Typography align="center" variant="button">

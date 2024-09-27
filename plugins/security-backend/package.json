@@ -7,11 +7,15 @@
   "private": true,
   "publishConfig": {
     "access": "public",
-    "main": "dist/index.esm.js",
+    "main": "dist/index.cjs.js",
     "types": "dist/index.d.ts"
   },
   "backstage": {
-    "role": "backend-plugin"
+    "role": "backend-plugin",
+    "pluginId": "security",
+    "pluginPackages": [
+      "@RedHatInsights/backstage-plugin-security-backend"
+    ]
   },
   "scripts": {
     "start": "backstage-cli package start",
@@ -20,7 +24,9 @@
     "test": "backstage-cli package test",
     "clean": "backstage-cli package clean",
     "prepack": "backstage-cli package prepack",
-    "postpack": "backstage-cli package postpack"
+    "postpack": "backstage-cli package postpack",
+    "export-dynamic": "janus-cli package export-dynamic-plugin --no-embed-as-dependencies",
+    "repack": "yarn export-dynamic && yarn pack --prod"
   },
   "dependencies": {
     "@backstage/backend-common": "^0.23.3",
@@ -52,7 +58,8 @@
     "supertest": "^6.2.4"
   },
   "files": [
-    "dist"
+    "dist",
+    "dist-scalprum"
   ],
   "peerDependencies": {
     "react": "^18.3.1"
