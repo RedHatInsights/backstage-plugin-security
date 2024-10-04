@@ -15,7 +15,6 @@ import { GetGrypeDataMain } from '../../common/getGrypeDataMain';
 export const GitRepoMainBranchComponent = (data: string) => {
     const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeDataMain(data)
 
-    console.log(data)
     const useStyles = makeStyles(theme => ({
         root: {
           width: '100%',
@@ -47,7 +46,7 @@ export const GitRepoMainBranchComponent = (data: string) => {
 
     return (
         <div>
-            <PaginatedTable grypeData={grypeResult} />
+          <PaginatedTable grypeData={grypeResult} />
         </div>
     )
 }

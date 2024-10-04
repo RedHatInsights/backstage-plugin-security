@@ -24,10 +24,6 @@ export async function createRouter(
 
   router.use(express.json());
 
-  // const middleware = MiddlewareFactory.create({ logger, config });
-
-  // router.use(middleware.error());
-
   // TODO: move these routes to separate router files
   router.get('/health', (_, response) => {
     response.json({ status: 'ok' });

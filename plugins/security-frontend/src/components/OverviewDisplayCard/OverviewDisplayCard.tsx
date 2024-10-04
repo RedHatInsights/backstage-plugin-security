@@ -1,17 +1,9 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
-import { Typography, Grid, Box } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import {
     InfoCard,
-    Header,
-    Page,
-    Content,
-    ContentHeader,
 } from '@backstage/core-components';
 import { useEntity } from '@backstage/plugin-catalog-react';
-import {
-    EntityLayout
-} from '@backstage/plugin-catalog';
 
 export const OverviewDisplayCard = () => {
     const { entity } = useEntity();
