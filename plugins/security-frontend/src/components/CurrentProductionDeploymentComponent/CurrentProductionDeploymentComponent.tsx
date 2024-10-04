@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
-import { Typography, Grid, Box } from '@material-ui/core';
+import React from 'react';
+import { Typography } from '@material-ui/core';
 import {
     InfoCard,
-    Header,
-    Page,
-    Content,
-    ContentHeader,
 } from '@backstage/core-components';
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -14,9 +10,6 @@ import { PaginatedTable } from '../PaginatedTable';
 
 export const CurrentProductionDeploymentComponent = (data: Object) => {
     const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = GetGrypeDataDeployed(data)
-    
-    console.log(data)
-    console.log(grypeResult)
 
     const useStyles = makeStyles(theme => ({
         root: {

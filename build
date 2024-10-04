@@ -19,8 +19,6 @@ cd ../..
 mv plugins/security-frontend/*.tgz .
 mv plugins/security-backend/*.tgz .
 
-# sha256sum *.tgz | awk '{print $1}' | xxd -r -p | base64
-
 fsha=$(sha256sum RedHatInsights-backstage-plugin-security-frontend-dynamic-0.1.0.tgz | awk '{print $1}' | xxd -r -p | base64)
 bsha=$(sha256sum RedHatInsights-backstage-plugin-security-backend-dynamic-0.1.0.tgz | awk '{print $1}' | xxd -r -p | base64)
 

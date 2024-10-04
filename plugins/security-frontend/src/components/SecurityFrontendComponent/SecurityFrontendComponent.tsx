@@ -2,15 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Grid, Box } from '@material-ui/core';
 import {
     InfoCard,
-    Header,
-    Page,
-    Content,
-    ContentHeader,
 } from '@backstage/core-components';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { GitRepoMainBranchComponent } from '../GitRepoMainBranchComponent/GitRepoMainBranchComponent';
 import { CurrentProductionDeploymentComponent } from '../CurrentProductionDeploymentComponent/CurrentProductionDeploymentComponent';
-import { SnykComponent } from '../SnykComponent';
 import QueryQontract from '../../common/queryQontract.ts';
 import { NSQuery } from '../../common/query';
 
@@ -60,25 +55,17 @@ export const SecurityFrontendComponent = () => {
 
     return (
         <InfoCard title={title}>
-            <Grid container>
-                <Grid container>
-                    <Typography>Git Repo (Main/Master Branch)</Typography>
-                    <Box gap={4} p={3} sx={{ width: '100%' }} overflow="auto">
-                        <GitRepoMainBranchComponent service={serviceName} />
-                    </Box>
-                    <Typography>Production Deployment (Current)</Typography>
-                    <Box gap={4} p={3} sx={{ width: '100%' }} overflow="auto">
-                        <CurrentProductionDeploymentComponent service={serviceName} deployedHash={deployedHash} />
-                    </Box>
-                </Grid>
-                {/* <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <Grid item xs={6}>
-                        <Box gap={2} p={2} sx={{ width: '100%', height: '480px' }} overflow="auto">
-                            <Typography>Snyk</Typography>
-                            <SnykComponent />
-                        </Box>
-                    </Grid>
-                </Grid> */}
+            <Grid item xs={12}>
+                <Typography>Git Repo (Main/Master Branch)</Typography>
+                <Box p={3} sx={{ width: '100%' }}>
+                    <GitRepoMainBranchComponent service={serviceName} />
+                </Box>
+            </Grid>
+                <Grid item xs={12}>
+                <Typography>Production Deployment (Current)</Typography>
+                <Box p={3} sx={{ width: '100%' }}>
+                    <CurrentProductionDeploymentComponent service={serviceName} deployedHash={deployedHash} />
+                </Box>
             </Grid>
         </InfoCard>
     )
