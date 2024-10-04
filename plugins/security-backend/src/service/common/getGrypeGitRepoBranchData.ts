@@ -1,5 +1,3 @@
-import react, { useState, useEffect } from 'react';
-
 import axios from 'axios';
 import yauzl from 'yauzl';
 

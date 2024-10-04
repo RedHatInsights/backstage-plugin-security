@@ -5,7 +5,6 @@ export const GetGrypeDataDeployed = (data) => {
     const [result, setResult] = useState<any>({});
     const [loaded, setLoaded] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
-    const [projectId, setProjectId] = useState<string>("");
 
     // Get Backstage objects
     const config = useApi(configApiRef);
