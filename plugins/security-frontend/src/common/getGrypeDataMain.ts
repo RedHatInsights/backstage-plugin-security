@@ -15,7 +15,6 @@ export const GetGrypeDataMain = (data) => {
         await fetch(`${backendUrl}/api/security/grype/main?service=${data.service}`)
             .then(response => response.json())
             .then(response => {
-                console.log(response)
                 setResult(response)
                 setLoaded(true)
             })

@@ -26,7 +26,6 @@ export const SecurityFrontendComponent = () => {
 
     const getProdDeployedHash = (qontractResult) => {
         const result = qontractResult.find((element) => element?.namespace?.path?.split('/')[5] === "prod.yml")
-        console.log("getProdDeployedHash: ", result?.ref)
 
         return result?.ref
     };
@@ -51,7 +50,6 @@ export const SecurityFrontendComponent = () => {
     
 
     const serviceName = getEntityServiceName()
-    console.log("entity name", serviceName)
 
     return (
         <InfoCard title={title}>

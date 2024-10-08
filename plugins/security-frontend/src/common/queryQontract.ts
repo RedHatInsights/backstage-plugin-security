@@ -25,7 +25,6 @@ const QueryQontract = (query: string, path?: string) => {
 
     const queryQontract = async () => {
         const variables = { path: getAppInterfaceNamespacePath() };
-        console.log("variables: ", variables)
 
         await request(proxyUrl, query, variables)
             .then((data: any) => {
