@@ -42,10 +42,6 @@ export async function createRouter(
   router.get('/grype/deployed', (req, res) => {
     const serviceName = req.query.service;
     const deployedHash = req.query.deployedHash;
-
-    console.log("QUERYDATA: ", req.query)
-    console.log("SERVICENAME: ", serviceName);
-    console.log("DEPLOYEDHASH: ", deployedHash);
     
     return QueryGithubActionsRunsData(backendUrl, serviceName, deployedHash)
       .then((data) => {

@@ -39,9 +39,6 @@ export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName
     await fetch(`${artifactUrl}?per_page=100`, { method: "get", redirect: "manual",  headers: headers})
       .then(response => response.json())
       .then(response => {
-        console.log(response.artifacts[0].workflow_run.head_sha);
-        console.log(response.artifacts[0].workflow_run.head_branch);
-
         if (deployedHash) {
           artifactJobId = getDeployedJob(response.artifacts)
         } else {
@@ -61,8 +58,6 @@ export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName
       .catch((_error) => {
           console.error(`Error fetching location header information: `, _error);
       })
-
-    console.log(location)
 
     // Download the ZIP file into memory
     const response = await axios({

@@ -17,7 +17,6 @@ export const GetGrypeDataDeployed = (data) => {
         await fetch(`${backendUrl}/api/security/grype/deployed?service=${data.service}&deployedHash=${data.deployedHash}`)
             .then(response => response.json())
             .then(response => {
-                console.log(response)
                 setResult(response)
                 setLoaded(true)
             })
