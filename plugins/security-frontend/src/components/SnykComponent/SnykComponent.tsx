@@ -12,6 +12,8 @@ import { getSnykData } from '../../common/getSnykdata';
 export function SnykComponent() {
     const { result: grypeResult, loaded: grypeLoaded, error: grypeError } = getSnykData();
 
+    console.log(grypeResult)
+
     return (
         <InfoCard>
             test

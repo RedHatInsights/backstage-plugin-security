@@ -29,7 +29,7 @@ export const getSnykData = () => {
         };
 
         // Find project ID
-        await fetch(`${backendUrl}/api/proxy/snyk/rest/orgs/ORG_ID/targets?version=2024-08-25&limit=100`, requestOptions)
+        await fetch(`${backendUrl}/api/proxy/snyk/rest/orgs/${ORG_ID}/projects?names=RedHatInsights%2Finsights-inventory-frontend&version=wip`, requestOptions)
             .then(response => response.json())
             .then(response => {
                 const projId = setProjectId(getProjectId(response.data))
