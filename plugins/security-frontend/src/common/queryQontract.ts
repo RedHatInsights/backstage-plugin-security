@@ -10,7 +10,8 @@ const QueryQontract = (query: string, path?: string) => {
     const { entity } = useEntity();
 
     const backendUrl = config.getString('backend.baseUrl');
-    const proxyUrl = `${backendUrl}/api/proxy/qontract/graphql`
+    const proxy = "qontract"
+    const proxyUrl = `${backendUrl}/api/proxy/${proxy}/graphql`
     
     // state variables for saving data queried from graphql
     const [result, setResult] = useState<QontractApp>([]);

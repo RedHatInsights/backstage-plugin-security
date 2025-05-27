@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useApi, configApiRef } from '@backstage/core-plugin-api';
+import { useApi, fetchApiRef, configApiRef } from '@backstage/core-plugin-api';
+
+const fetchApi = useApi(fetchApiRef);
 
 export const getSnykData = () => {
     const [result, setResult] = useState<any>({});
     const [loaded, setLoaded] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
     const [projectId, setProjectId] = useState<string>("");
+    const proxy = `snyk`;
 
     // Get Backstage objects
     const config = useApi(configApiRef);
@@ -21,14 +24,14 @@ export const getSnykData = () => {
         })
     }
 
-    const getGrypeRepoData = async () => {
+    const getGrypeRepoData = () => {
         const requestOptions = {
             version: "2024-08-25",
             limit: 100,
         };
 
         // Find project ID
-        await fetch(`${backendUrl}/api/proxy/snyk/rest/orgs/ORG_ID/targets?version=2024-08-25&limit=100`, requestOptions)
+        await fetchApi.fetch(`${backendUrl}/api/proxy/${proxy}/rest/orgs/ORG_ID/targets?version=2024-08-25&limit=100`, requestOptions)
             .then(response => response.json())
             .then(response => {
                 setProjectId(getProjectId(response.data))
@@ -40,7 +43,7 @@ export const getSnykData = () => {
     }
 
     useEffect(() => {
-        getGrypeRepoData()
+        getGrypeRepoData(proxy)
     }, []);
 
     return { result, loaded, error }

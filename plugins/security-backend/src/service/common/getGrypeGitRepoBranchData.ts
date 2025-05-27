@@ -1,8 +1,16 @@
 import axios from 'axios';
 import yauzl from 'yauzl';
+import {useApi, fetchApiRef} from '@backstage/core-plugin-api';
+
+const fetchApi = useApi(fetchApiRef);
+
 
 export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName: string, deployedHash: string) => {
-    const artifactUrl = `${backendUrl}/api/proxy/actions/repos/RedHatInsights/${serviceName}/actions/artifacts`;
+    const proxy = "actions"
+
+    const artifactUrl = () => {
+       return `${backendUrl}/api/proxy/${proxy}/repos/RedHatInsights/${serviceName}/actions/artifacts`;
+    }
     let location: string = "";
     let artifactJobId: number = 0;
     let fileData = '';
@@ -36,37 +44,44 @@ export const QueryGithubActionsRunsData = async (backendUrl: string, serviceName
       return {}
     }
 
-    await fetch(`${artifactUrl}?per_page=100`, { method: "get", redirect: "manual",  headers: headers})
-      .then(response => response.json())
-      .then(response => {
-        if (deployedHash) {
-          artifactJobId = getDeployedJob(response.artifacts)
-        } else {
-          artifactJobId = getMainBranchJob(response.artifacts);
+    const fetchArtifact = async() => {
+        await fetchApi.fetch(`${artifactUrl}?per_page=100`, { method: "get", redirect: "manual",  headers: headers})
+          .then(response => response.json())
+          .then(response => {
+            if (deployedHash) {
+              artifactJobId = getDeployedJob(response.artifacts)
+            } else {
+              artifactJobId = getMainBranchJob(response.artifacts);
+            }
+          })
+          .catch((_error) => {
+              console.error(`Error fetching list of artifacts: `, _error);
+          })
         }
-      })
-      .catch((_error) => {
-          console.error(`Error fetching list of artifacts: `, _error);
-      })
 
     // Backstage's proxy does not support redirect urls, therefore we are 
     // manually implementing the redirect
-    await fetch(`${artifactUrl}/${artifactJobId}/zip`, { method: "get", redirect: "manual",  headers: headers})
-      .then(response => {
-        location = JSON.stringify(response.headers.get("location"));
-      })
-      .catch((_error) => {
-          console.error(`Error fetching location header information: `, _error);
-      })
+    const redirectZip = async() => {
+      await fetchApi.fetch(`${artifactUrl}/${artifactJobId}/zip`, { method: "get", redirect: "manual",  headers: headers})
+        .then(response => {
+          location = JSON.stringify(response.headers.get("location"));
+        })
+        .catch((_error) => {
+            console.error(`Error fetching location header information: `, _error);
+        })
+      
+      // Download the ZIP file into memory
+      const response = await axios({
+        method: 'get',
+        url: location.slice(1, -1),
+        responseType: 'arraybuffer'
+      });
 
-    // Download the ZIP file into memory
-    const response = await axios({
-      method: 'get',
-      url: location.slice(1, -1),
-      responseType: 'arraybuffer'
-    });
-
-    const buffer = Buffer.from(response.data);
+      const buffer = Buffer.from(response.data);
+    }
+  
+  fetchArtifact
+  redirectZip
 
     return new Promise<string>((resolve, reject) => {
       // Open the ZIP file from memory
